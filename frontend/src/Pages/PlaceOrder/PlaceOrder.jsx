@@ -20,11 +20,28 @@ const PlaceOrder = () => {
     phone: ""
   });
 
+  const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
+  const [upiId, setUpiId] = useState("");
+  const [selectedBank, setSelectedBank] = useState("");
+
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData(prev => ({ ...prev, [name]: value }));
   };
+
+  const bankList = [
+    "State Bank of India",
+    "HDFC Bank",
+    "ICICI Bank",
+    "Axis Bank",
+    "Kotak Mahindra Bank",
+    "Punjab National Bank",
+    "Bank of Baroda",
+    "Canara Bank",
+    "Union Bank of India",
+    "Indian Bank"
+  ];
 
   const placeOrder = async (event) => {
     event.preventDefault();
@@ -37,6 +54,16 @@ const PlaceOrder = () => {
 
     if (!data.firstName || !data.email || !data.street || !data.city || !data.state || !data.zipCode || !data.country || !data.phone) {
       alert("Please fill all required fields");
+      return;
+    }
+
+    if (paymentMethod === "UPI" && !upiId) {
+      alert("Please enter your UPI ID");
+      return;
+    }
+
+    if (paymentMethod === "Net Banking" && !selectedBank) {
+      alert("Please select a bank");
       return;
     }
 
@@ -64,7 +91,8 @@ const PlaceOrder = () => {
         items,
         amount: totalAmount,
         address,
-        phone: data.phone
+        phone: data.phone,
+        paymentMethod
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -109,6 +137,39 @@ const PlaceOrder = () => {
           <input name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Country' required />
         </div>
         <input name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Phone number' required />
+
+        <p className="title" style={{ marginTop: "30px" }}>Payment Method</p>
+        <div className="payment-methods">
+          <label className={`payment-option ${paymentMethod === "Cash on Delivery" ? "active" : ""}`}>
+            <input type="radio" name="paymentMethod" value="Cash on Delivery" checked={paymentMethod === "Cash on Delivery"} onChange={(e) => setPaymentMethod(e.target.value)} />
+            <span className="payment-label">Cash on Delivery</span>
+          </label>
+          <label className={`payment-option ${paymentMethod === "UPI" ? "active" : ""}`}>
+            <input type="radio" name="paymentMethod" value="UPI" checked={paymentMethod === "UPI"} onChange={(e) => setPaymentMethod(e.target.value)} />
+            <span className="payment-label">UPI</span>
+          </label>
+          <label className={`payment-option ${paymentMethod === "Net Banking" ? "active" : ""}`}>
+            <input type="radio" name="paymentMethod" value="Net Banking" checked={paymentMethod === "Net Banking"} onChange={(e) => setPaymentMethod(e.target.value)} />
+            <span className="payment-label">Net Banking</span>
+          </label>
+        </div>
+
+        {paymentMethod === "UPI" && (
+          <div className="upi-section">
+            <input type="text" placeholder='Enter UPI ID (e.g. name@upi)' value={upiId} onChange={(e) => setUpiId(e.target.value)} required />
+          </div>
+        )}
+
+        {paymentMethod === "Net Banking" && (
+          <div className="netbanking-section">
+            <select value={selectedBank} onChange={(e) => setSelectedBank(e.target.value)} required>
+              <option value="">Select your bank</option>
+              {bankList.map((bank) => (
+                <option key={bank} value={bank}>{bank}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
       <div className="place-order-right">
         <div className="cart-total">
@@ -116,17 +177,17 @@ const PlaceOrder = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${subtotal}</p>
+              <p>₹{subtotal}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${deliveryFee}</p>
+              <p>₹{deliveryFee}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${total}</b>
+              <b>₹{total}</b>
             </div>
           </div>
           <button type='submit' disabled={loading}>

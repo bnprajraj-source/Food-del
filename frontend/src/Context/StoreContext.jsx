@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { food_list as staticFoodList } from "../assets/assets";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const StoreContext = createContext(null);
@@ -104,11 +105,14 @@ const StoreContextProvider = (props) => {
         async function loadFoodData() {
             try {
                 const response = await axios.get(url + "/api/foods/list");
-                if (response.data.success) {
+                if (response.data.success && response.data.data.length > 0) {
                     setFoodList(response.data.data);
+                } else {
+                    setFoodList(staticFoodList);
                 }
             } catch (error) {
                 console.log("Error fetching food data:", error);
+                setFoodList(staticFoodList);
             }
         }
         loadFoodData();

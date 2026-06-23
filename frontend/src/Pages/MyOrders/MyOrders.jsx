@@ -91,7 +91,7 @@ const MyOrders = () => {
                   </p>
                 ))}
               </div>
-              <p className="my-orders-item-amount">${order.totalAmount}</p>
+              <p className="my-orders-item-amount">₹{order.totalAmount}</p>
             </div>
             <div className="my-orders-item-bottom">
               <p className="my-orders-date">

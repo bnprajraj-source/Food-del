@@ -45,8 +45,67 @@
     cursor: not-allowed;
 }
 
+.payment-methods {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 2px solid #c5c5c5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+    min-width: 140px;
+}
+
+.payment-option input[type="radio"] {
+    display: none;
+}
+
+.payment-option.active {
+    border-color: tomato;
+    background-color: #fff5f5;
+}
+
+.payment-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #262626;
+}
+
+.upi-section input {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    outline-color: tomato;
+}
+
+.netbanking-section select {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    outline-color: tomato;
+    background-color: #fff;
+    font-size: 15px;
+}
+
 @media (max-width: 750px) {
     .place-order {
+        flex-direction: column;
+    }
+
+    .payment-methods {
         flex-direction: column;
     }
 }

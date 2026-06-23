@@ -134,17 +134,17 @@ const OrderTracking = () => {
           {order.items.map((item, idx) => (
             <div key={idx} className="tracking-item">
               <p className="tracking-item-name">{item.foodId?.name || 'Food Item'} x{item.quantity}</p>
-              <p className="tracking-item-price">${item.price * item.quantity}</p>
+              <p className="tracking-item-price">₹{item.price * item.quantity}</p>
             </div>
           ))}
           <hr />
           <div className="tracking-item">
             <p className="tracking-item-name"><b>Delivery Fee</b></p>
-            <p className="tracking-item-price">$2</p>
+            <p className="tracking-item-price">₹2</p>
           </div>
           <div className="tracking-item">
             <p className="tracking-item-name"><b>Total</b></p>
-            <p className="tracking-item-price"><b>${order.totalAmount}</b></p>
+            <p className="tracking-item-price"><b>₹{order.totalAmount}</b></p>
           </div>
         </div>
 

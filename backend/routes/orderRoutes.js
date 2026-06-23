@@ -40,7 +40,7 @@ router.post('/', authenticate, async (req, res) => {
 router.post('/place', authenticate, async (req, res) => {
   const frontend_url = process.env.FRONTEND_URL || "http://localhost:5173";
   try {
-    const { items, amount, address, phone } = req.body;
+    const { items, amount, address, phone, paymentMethod } = req.body;
     const userId = req.userId;
 
     const newOrder = new Order({
@@ -49,7 +49,7 @@ router.post('/place', authenticate, async (req, res) => {
       totalAmount: amount,
       deliveryAddress: address,
       phone,
-      paymentMethod: process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY !== 'sk_test_51234567890abcdef' ? "Credit Card" : "Cash on Delivery"
+      paymentMethod: paymentMethod || "Cash on Delivery"
     });
     await newOrder.save();
 
