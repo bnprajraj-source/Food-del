@@ -1,0 +1,165 @@
+.my-orders {
+    margin-top: 100px;
+    padding: 0 20px;
+}
+
+.my-orders h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.my-orders-loading,
+.my-orders-empty {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid tomato;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.my-orders-loading p,
+.my-orders-empty p {
+    color: #888;
+}
+
+.my-orders-empty h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.my-orders-empty button {
+    border: none;
+    color: white;
+    background-color: tomato;
+    padding: 12px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.my-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.my-orders-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    background: #fff;
+}
+
+.my-orders-item-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.my-orders-parcel img {
+    width: 50px;
+}
+
+.my-orders-item-info {
+    flex: 1;
+}
+
+.my-orders-item-name {
+    font-size: 14px;
+    color: #555;
+}
+
+.my-orders-item-amount {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+}
+
+.my-orders-item-bottom {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+}
+
+.my-orders-date {
+    color: #999;
+}
+
+.my-orders-status {
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.status-confirmed {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.status-transit {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+}
+
+.status-delivered {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.status-cancelled {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.my-orders-payment {
+    color: #999;
+}
+
+.my-orders-track-btn {
+    margin-left: auto;
+    border: 1px solid tomato;
+    background: transparent;
+    color: tomato;
+    padding: 6px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.my-orders-track-btn:hover {
+    background-color: #fff4f2;
+}
+
+@media (max-width: 600px) {
+    .my-orders-item-bottom {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
