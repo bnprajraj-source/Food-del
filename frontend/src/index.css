@@ -18,6 +18,12 @@ a{
   margin:  auto;
 }
 
+@media (max-width:750px) {
+  .app{
+    width: 92%;
+  }
+}
+
 @keyframes  fadeIn {
   0% {
     opacity: 0;

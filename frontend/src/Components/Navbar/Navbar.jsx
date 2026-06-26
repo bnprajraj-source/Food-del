@@ -8,17 +8,26 @@ import { StoreContext } from '../../Context/StoreContext';
 const Navbar = ({setShowLogin}) => {
 
     const [menu, setMenu] = useState("home")
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const {getTotalCartAmount,token,setToken,clearCart} = useContext(StoreContext);
     const navigate = useNavigate();
+
+    const handleNavClick = (menuName) => {
+        setMenu(menuName);
+        setMobileMenuOpen(false);
+    };
+
   return (
     <div className='navbar'>
         <Link to='/'><img src={assets.logo} alt="" className="logo" /></Link>
-        <ul className="navbar-menu">
-            <Link to='/' onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>home</Link>
-            <a href='#explore-menu' onClick={() => setMenu("menu")} className={menu === "menu" ? "active" : ""}>menu</a>
-            <a href='#app-download' onClick={() => setMenu("mobile-app")} className={menu === "mobile-app" ? "active" : ""}>mobile-app</a>
-            <a href='#footer' onClick={() => setMenu("contact us")} className={menu === "contact us" ? "active" : ""}>contact us</a>
-        </ul>
+
+        <div className={`navbar-menu ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+            <Link to='/' onClick={() => handleNavClick("home")} className={menu === "home" ? "active" : ""}>home</Link>
+            <a href='#explore-menu' onClick={() => handleNavClick("menu")} className={menu === "menu" ? "active" : ""}>menu</a>
+            <a href='#app-download' onClick={() => handleNavClick("mobile-app")} className={menu === "mobile-app" ? "active" : ""}>mobile-app</a>
+            <a href='#footer' onClick={() => handleNavClick("contact us")} className={menu === "contact us" ? "active" : ""}>contact us</a>
+        </div>
+
         <div className="navbar-right">
             <img src={assets.search_icon} alt="" className="search-icon" />
             <div className="navbar-search-icon">
@@ -36,10 +45,12 @@ const Navbar = ({setShowLogin}) => {
                 </div>
                 : <button onClick={() => setShowLogin(true)}>Sign In</button>
             }
-
+            <div className="navbar-hamburger" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                <span className={mobileMenuOpen ? 'open' : ''}></span>
+                <span className={mobileMenuOpen ? 'open' : ''}></span>
+                <span className={mobileMenuOpen ? 'open' : ''}></span>
+            </div>
         </div>
-
-      
     </div>
   )
 }
