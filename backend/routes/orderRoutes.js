@@ -1,10 +1,7 @@
 import express from 'express';
 import Order from '../models/Order.js';
 import Cart from '../models/Cart.js';
-import Stripe from 'stripe';
 import { authenticate, authorize } from '../middleware/auth.js';
-
-const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
 
 const router = express.Router();
 
@@ -55,10 +52,13 @@ router.post('/place', authenticate, async (req, res) => {
 
     await Cart.findOneAndUpdate({ userId }, { items: [], totalPrice: 0 });
 
-    if (!stripe) {
+    if (!process.env.STRIPE_SECRET_KEY) {
       await Order.findByIdAndUpdate(newOrder._id, { paymentStatus: "Completed", status: "Confirmed" });
       return res.json({ success: true, session_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}` });
     }
+
+    const { default: Stripe } = await import('stripe');
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
     const line_items = items.map((item) => ({
       price_data: {
