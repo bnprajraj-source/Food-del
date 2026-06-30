@@ -67,9 +67,6 @@ const LoginPopup = ({setShowLogin}) => {
             }
         }
     }
-        // The authentication logic (API calls) will be implemented here
-    
-
   return (
     <div className='login-popup'>
         <form onSubmit={onLogin} className="login-popup-container">

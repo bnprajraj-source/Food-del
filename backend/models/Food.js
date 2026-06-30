@@ -25,23 +25,6 @@ const foodSchema = new mongoose.Schema(
       required: [true, "Please provide food category"],
       enum: ["Salad", "Rolls", "Deserts", "Sandwich", "Cake", "Pure Veg", "Pasta", "Noodles"],
     },
-    rating: {
-      type: Number,
-      default: 4.5,
-      min: 0,
-      max: 5,
-    },
-    reviews: [
-      {
-        userId: mongoose.Schema.Types.ObjectId,
-        comment: String,
-        rating: Number,
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
     availability: {
       type: Boolean,
       default: true,

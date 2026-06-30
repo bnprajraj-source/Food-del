@@ -57,8 +57,6 @@ const orderSchema = new mongoose.Schema(
       default: "Pending",
     },
     transactionId: String,
-    estimatedDeliveryTime: Date,
-    notes: String,
   },
   {
     timestamps: true,

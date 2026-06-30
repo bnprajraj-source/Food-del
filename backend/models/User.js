@@ -34,10 +34,6 @@ const userSchema = new mongoose.Schema(
       state: String,
       zipCode: String,
     },
-    profilePicture: {
-      type: String,
-      default: null,
-    },
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -46,10 +42,6 @@ const userSchema = new mongoose.Schema(
     cartData: {
       type: Object,
       default: {},
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
     },
   },
   {
