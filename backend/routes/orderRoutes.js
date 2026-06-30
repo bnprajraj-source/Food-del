@@ -4,7 +4,7 @@ import Cart from '../models/Cart.js';
 import Stripe from 'stripe';
 import { authenticate, authorize } from '../middleware/auth.js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
 
 const router = express.Router();
 
@@ -55,8 +55,7 @@ router.post('/place', authenticate, async (req, res) => {
 
     await Cart.findOneAndUpdate({ userId }, { items: [], totalPrice: 0 });
 
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    if (!stripeKey || stripeKey === 'sk_test_51234567890abcdef') {
+    if (!stripe) {
       await Order.findByIdAndUpdate(newOrder._id, { paymentStatus: "Completed", status: "Confirmed" });
       return res.json({ success: true, session_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}` });
     }
