@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import crypto from 'crypto'
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
@@ -13,9 +14,13 @@ import paymentRoutes from './routes/paymentRoutes.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+if (typeof globalThis.crypto === 'undefined') {
+  globalThis.crypto = crypto
+}
+
 // app config
 const app = express()
-const port = 4000
+const port = process.env.PORT || 4000
 
 // middlewares
 app.use(express.json())
@@ -101,8 +106,8 @@ app.use((err, req, res, next) => {
 // db connection
 connectDB()
     .then(() => {
-        app.listen(port, () => {
-            console.log(`Server started on http://localhost:${port}`)
+        app.listen(port, '0.0.0.0', () => {
+            console.log(`Server started on http://0.0.0.0:${port}`)
         })
     })
     .catch((error) => {
